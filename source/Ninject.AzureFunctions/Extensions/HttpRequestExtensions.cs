@@ -13,7 +13,7 @@ namespace Ninject.AzureFunctions.Extensions
     {
         public static IActionResult ExecuteFeature<T>(this HttpRequest request, TraceWriter log)
         {
-
+            return new OkObjectResult($"Hello");
         }
     }
 }
