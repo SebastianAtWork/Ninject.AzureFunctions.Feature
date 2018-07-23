@@ -7,11 +7,11 @@ using Example.Contracts.Repositories;
 
 namespace Example.Host.Features
 {
-    public class DoSomething
+    public class AwesomeFeature
     {
         private readonly IExampleRepository _exampleRepository;
 
-        public DoSomething(IExampleRepository exampleRepository)
+        public AwesomeFeature(IExampleRepository exampleRepository)
         {
             _exampleRepository = exampleRepository;
         }

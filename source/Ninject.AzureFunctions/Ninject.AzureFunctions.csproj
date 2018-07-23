@@ -9,4 +9,16 @@
     <PackageReference Include="ninject.extensions.conventions" Version="3.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
+      <HintPath>..\..\..\..\..\Users\s.schwarz\.nuget\packages\microsoft.aspnetcore.http.abstractions\2.0.1\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
+      <HintPath>..\..\..\..\..\Users\s.schwarz\.nuget\packages\microsoft.aspnetcore.mvc.abstractions\2.0.2\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.WebJobs.Host">
+      <HintPath>..\..\..\..\..\Users\s.schwarz\.nuget\packages\microsoft.azure.webjobs\3.0.0-beta5\lib\netstandard2.0\Microsoft.Azure.WebJobs.Host.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

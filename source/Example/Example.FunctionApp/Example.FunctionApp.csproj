@@ -7,6 +7,10 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.14" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Ninject.AzureFunctions\Ninject.AzureFunctions.csproj" />
+    <ProjectReference Include="..\Example.Host\Example.Host.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="host.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
