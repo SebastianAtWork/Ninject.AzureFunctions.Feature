@@ -7,6 +7,8 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.14" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ninject.AzureFunctions.Tests.Contracts\Ninject.AzureFunctions.Tests.Contracts.csproj" />
+    <ProjectReference Include="..\Ninject.AzureFunctions.Tests.Host\Ninject.AzureFunctions.Tests.Host.csproj" />
     <ProjectReference Include="..\Ninject.AzureFunctions\Ninject.AzureFunctions.csproj" />
   </ItemGroup>
   <ItemGroup>
