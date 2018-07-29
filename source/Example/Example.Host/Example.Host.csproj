@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Ninject.AzureFunctions.Contracts\Ninject.AzureFunctions.Contracts.csproj" />
     <ProjectReference Include="..\Example.Contracts\Example.Contracts.csproj" />
   </ItemGroup>
 

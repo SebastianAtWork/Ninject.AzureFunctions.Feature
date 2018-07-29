@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Example.Contracts.Repositories;
+using Ninject.AzureFunctions.Contracts;
 
 namespace Example.Host.Features
 {
-    public class AwesomeFeature
+    public class AwesomeFeature : IFeature<string,int>
     {
         private readonly IExampleRepository _exampleRepository;
 
@@ -16,7 +17,7 @@ namespace Example.Host.Features
             _exampleRepository = exampleRepository;
         }
 
-        public int Execute(string param)
+        public async Task<int> Execute(string param)
         {
             return 1;
         }

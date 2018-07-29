@@ -16,7 +16,7 @@ namespace Example.FunctionApp
         [FunctionName("DoSomething")]
         public static IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "DoSomething/{id:int}")]HttpRequest req, TraceWriter log)
         {
-            return req.ExecuteFeature<AwesomeFeature>(log);
+            return req.ExecuteFeature<AwesomeFeature,string,int,AwesomeKernelInitializer>(log);
         }
     }
 }
