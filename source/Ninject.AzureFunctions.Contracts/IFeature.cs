@@ -3,31 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ninject.AzureFunctions.Contracts
 {
     public interface IFeature
     {
-        Task Execute();
+        Task<IActionResult> Execute();
     }
 
-    public interface IFeature<TA>
+    public interface IFeature<in TA>
     {
-        Task<TA> Execute();
+        Task<IActionResult> Execute(TA param1);
     }
 
-    public interface IFeature<in TA,TB>
+    public interface IFeature<in TA, in TB>
     {
-        Task<TB> Execute(TA param1);
+        Task<IActionResult> Execute(TA param1,TB param2);
     }
 
-    public interface IFeature<in TA, in TB, TC>
+    public interface IFeature<in TA, in TB, in TC>
     {
-        Task<TC> Execute(TA param1,TB param2);
-    }
-
-    public interface IFeature<in TA, in TB, in TC, TD>
-    {
-        Task<TD> Execute(TA param1, TB param2, TC param3);
+        Task<IActionResult> Execute(TA param1, TB param2, TC param3);
     }
 }

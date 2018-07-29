@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Example.Contracts.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using Ninject.AzureFunctions.Contracts;
 
 namespace Example.Host.Features
 {
-    public class AwesomeFeature : IFeature<string,int>
+    public class AwesomeFeature : IFeature<int>
     {
         private readonly IExampleRepository _exampleRepository;
 
@@ -17,9 +18,9 @@ namespace Example.Host.Features
             _exampleRepository = exampleRepository;
         }
 
-        public async Task<int> Execute(string param)
+        public async Task<IActionResult> Execute(int id)
         {
-            return 1;
+            return new OkObjectResult("1");
         }
     }
 }
