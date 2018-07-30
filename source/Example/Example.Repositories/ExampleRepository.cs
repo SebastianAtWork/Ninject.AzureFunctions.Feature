@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Example.Contracts;
+using Example.Contracts.Repositories;
 
 namespace Example.Repositories
 {
-    public class ExampleRepository
+    public class ExampleRepository : IExampleRepository
     {
-        private readonly string _connectionString;
 
-        public ExampleRepository(string connectionString)
+        public ExampleRepository(Configuration configuration)
         {
-            _connectionString = connectionString;
         }
     }
 }

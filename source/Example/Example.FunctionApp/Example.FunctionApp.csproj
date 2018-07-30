@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Ninject.AzureFunctions\Ninject.AzureFunctions.csproj" />
     <ProjectReference Include="..\Example.Host\Example.Host.csproj" />
+    <ProjectReference Include="..\Example.Repositories\Example.Repositories.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

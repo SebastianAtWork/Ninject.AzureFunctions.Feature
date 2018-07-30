@@ -15,7 +15,7 @@ namespace Example.FunctionApp
     public static class DoSomething
     {
         [FunctionName("DoSomething")]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "DoSomething/{id:int}")]HttpRequest req,int id, TraceWriter log)
+        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = "DoSomething/{id:int}")]HttpRequest req,int id, TraceWriter log)
         {
             using (var autoContainer = new AutoFeatureContainer<AwesomeKernelInitializer>())
             {

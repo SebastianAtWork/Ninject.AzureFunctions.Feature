@@ -21,6 +21,9 @@
     <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
       <HintPath>..\..\..\..\..\Users\s.schwarz\.nuget\packages\microsoft.aspnetcore.mvc.abstractions\2.0.2\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.WebApiCompatShim">
+      <HintPath>..\..\..\..\..\Users\s.schwarz\.nuget\packages\microsoft.aspnetcore.mvc.webapicompatshim\2.0.2\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.WebApiCompatShim.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.WebJobs.Extensions.Http">
       <HintPath>..\..\..\..\..\Users\s.schwarz\.nuget\packages\microsoft.azure.webjobs.extensions.http\3.0.0-beta5\lib\netstandard2.0\Microsoft.Azure.WebJobs.Extensions.Http.dll</HintPath>
     </Reference>
