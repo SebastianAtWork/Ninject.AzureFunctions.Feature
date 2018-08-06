@@ -14,5 +14,10 @@ namespace Example.Repositories
         public ExampleRepository(Configuration configuration)
         {
         }
+
+        public void Test()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -8,6 +8,6 @@ namespace Example.Contracts.Repositories
 {
     public interface IExampleRepository
     {
-        
+        void Test();
     }
 }

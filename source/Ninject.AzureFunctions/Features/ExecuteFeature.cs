@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Castle.Core.Internal;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.Azure.WebJobs;
@@ -53,7 +56,7 @@ namespace Ninject.AzureFunctions.Features
                 log.Error(e.Message,e);
             }
 
-            return new InternalServerErrorResult();
+            return new ObjectResult("");
         }
     }
 }
