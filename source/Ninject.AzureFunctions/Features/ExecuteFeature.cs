@@ -23,8 +23,9 @@ namespace Ninject.AzureFunctions.Features
     public static class ExecuteFeature
     {
 
-        public static async Task<IActionResult> Execute(IAutoFeatureContainer kernelContainer,Type typeofFeature, Type typeofKernelInitializer, HttpRequest request, TraceWriter log, params object[] callingParams)
+        public static async Task<IActionResult> Execute(IAutoFeatureContainer kernelContainer,Type typeofFeature, Type typeofKernelInitializer, HttpRequest request,  params object[] callingParams)
         {
+            var log = kernelContainer.Kernel.Get<TraceWriter>();
             try
             {
                 var feature = kernelContainer.Kernel.Get(typeofFeature);
@@ -54,9 +55,8 @@ namespace Ninject.AzureFunctions.Features
             catch (Exception e)
             {
                 log.Error(e.Message,e);
+                return new InternalServerErrorResult();
             }
-
-            return new ObjectResult("");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Azure.WebJobs.Host;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Ninject.AzureFunctions.Contracts
 {
     public interface IKernelInizializer
     {
-        IKernelConfiguration CreateKernelConfiguration();
+        IKernelConfiguration CreateKernelConfiguration(TraceWriter log);
     }
 }
