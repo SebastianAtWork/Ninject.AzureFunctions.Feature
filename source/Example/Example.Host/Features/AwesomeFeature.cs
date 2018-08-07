@@ -9,7 +9,7 @@ using Ninject.AzureFunctions.Contracts;
 
 namespace Example.Host.Features
 {
-    public class AwesomeFeature : IFeature<int>
+    public class AwesomeFeature : IFeature
     {
         private readonly IExampleRepository _exampleRepository;
 
@@ -18,9 +18,9 @@ namespace Example.Host.Features
             _exampleRepository = exampleRepository;
         }
 
-        public async Task<IActionResult> Execute(int id)
+        public async Task<string> Execute(int id)
         {
-            return new OkObjectResult("1");
+            return "1";
         }
     }
 }

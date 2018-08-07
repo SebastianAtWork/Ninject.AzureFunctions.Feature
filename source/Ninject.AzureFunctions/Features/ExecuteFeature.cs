@@ -23,38 +23,110 @@ namespace Ninject.AzureFunctions.Features
     public static class ExecuteFeature
     {
 
-        public static async Task<IActionResult> Execute(IAutoFeatureContainer kernelContainer,Type typeofFeature, Type typeofKernelInitializer, HttpRequest request,  params object[] callingParams)
+        public static async Task<IActionResult> ExecuteVoid<TF>(IAutoFeatureContainer kernelContainer, Type typeofKernelInitializer, HttpRequest request, Func<TF, Task> featureCall)
         {
             var log = kernelContainer.Kernel.Get<TraceWriter>();
             try
             {
-                var feature = kernelContainer.Kernel.Get(typeofFeature);
+                var feature = kernelContainer.Kernel.Get<TF>();
+                await featureCall(feature);
+                return new OkResult();
 
-                var methodInfo = feature.GetType().GetMethod(nameof(IFeature.Execute));
-
-                IActionResult result = null;
-
-                if (request?.ContentLength > 0)
-                {
-                    var bodySerialized = await request.ReadAsStringAsync();
-                    var typeofBody = methodInfo.GetParameters()[0].ParameterType;
-                    var bodyDeserialized = JsonConvert.DeserializeObject(bodySerialized, typeofBody);
-                    var parameters = new List<object>();
-                    parameters.Add(bodyDeserialized);
-                    parameters.AddRange(callingParams);
-                    var resultTask = methodInfo.Invoke(feature, parameters.ToArray()) as Task<IActionResult>;
-                    return await resultTask;
-
-                }
-                else
-                {
-                    var resultTask = methodInfo.Invoke(feature, callingParams.ToArray()) as Task<IActionResult>;
-                    return await resultTask;
-                }
             }
             catch (Exception e)
             {
-                log.Error(e.Message,e);
+                log.Error(e.Message, e);
+                return new InternalServerErrorResult();
+            }
+        }
+
+        public static async Task<IActionResult> ExecuteOk<TF, TR>(IAutoFeatureContainer kernelContainer, Type typeofKernelInitializer, HttpRequest request, Func<TF, Task<TR>> featureCall)
+        {
+            var log = kernelContainer.Kernel.Get<TraceWriter>();
+            try
+            {
+                var feature = kernelContainer.Kernel.Get<TF>();
+                var result = await featureCall(feature);
+                return new OkObjectResult(result);
+
+            }
+            catch (Exception e)
+            {
+                log.Error(e.Message, e);
+                return new InternalServerErrorResult();
+            }
+        }
+
+        public static async Task<IActionResult> ExecuteAction<TF>(IAutoFeatureContainer kernelContainer, Type typeofKernelInitializer, HttpRequest request, Func<TF, Task<IActionResult>> featureCall)
+        {
+            var log = kernelContainer.Kernel.Get<TraceWriter>();
+            try
+            {
+                var feature = kernelContainer.Kernel.Get<TF>();
+                var result = await featureCall(feature);
+                return result;
+
+            }
+            catch (Exception e)
+            {
+                log.Error(e.Message, e);
+                return new InternalServerErrorResult();
+            }
+        }
+
+        public static async Task<IActionResult> ExecuteVoidWithBody<TF, TB>(IAutoFeatureContainer kernelContainer, Type typeofKernelInitializer, HttpRequest request, Func<TF, TB, Task> featureCall)
+        {
+            var log = kernelContainer.Kernel.Get<TraceWriter>();
+            try
+            {
+                var feature = kernelContainer.Kernel.Get<TF>();
+                var bodySerialized = await request.ReadAsStringAsync();
+                var bodyDeserialized = JsonConvert.DeserializeObject<TB>(bodySerialized);
+                await featureCall(feature, bodyDeserialized);
+                return new OkResult();
+
+            }
+            catch (Exception e)
+            {
+                log.Error(e.Message, e);
+                return new InternalServerErrorResult();
+            }
+        }
+
+        public static async Task<IActionResult> ExecuteOkWithBody<TF, TB, TR>(IAutoFeatureContainer kernelContainer, Type typeofKernelInitializer, HttpRequest request, Func<TF, TB, Task<TR>> featureCall)
+        {
+            var log = kernelContainer.Kernel.Get<TraceWriter>();
+            try
+            {
+                var feature = kernelContainer.Kernel.Get<TF>();
+                var bodySerialized = await request.ReadAsStringAsync();
+                var bodyDeserialized = JsonConvert.DeserializeObject<TB>(bodySerialized);
+                var result = await featureCall(feature, bodyDeserialized);
+                return new OkObjectResult(result);
+
+            }
+            catch (Exception e)
+            {
+                log.Error(e.Message, e);
+                return new InternalServerErrorResult();
+            }
+        }
+
+        public static async Task<IActionResult> ExecuteActionWithBody<TF, TB>(IAutoFeatureContainer kernelContainer, Type typeofKernelInitializer, HttpRequest request, Func<TF, TB, Task<IActionResult>> featureCall)
+        {
+            var log = kernelContainer.Kernel.Get<TraceWriter>();
+            try
+            {
+                var feature = kernelContainer.Kernel.Get<TF>();
+                var bodySerialized = await request.ReadAsStringAsync();
+                var bodyDeserialized = JsonConvert.DeserializeObject<TB>(bodySerialized);
+                var result = await featureCall(feature, bodyDeserialized);
+                return result;
+
+            }
+            catch (Exception e)
+            {
+                log.Error(e.Message, e);
                 return new InternalServerErrorResult();
             }
         }

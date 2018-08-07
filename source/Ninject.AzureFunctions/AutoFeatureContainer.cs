@@ -25,25 +25,36 @@ namespace Ninject.AzureFunctions
             get { return _kernel; }
         }
 
-        public async Task<IActionResult> ExecuteFeature<TF>(HttpRequest request) where TF : IFeature
+        public async Task<IActionResult> ExecuteVoidFeature<TF>(HttpRequest request,Func<TF,Task> featureCall) where TF : IFeature
         {
-            return await Features.ExecuteFeature.Execute(this,typeof(TF), typeof(T), request);
+            return await Features.ExecuteFeature.ExecuteVoid(this,typeof(T), request, featureCall);
         }
 
-        public async Task<IActionResult> ExecuteFeature<TF, TA>(HttpRequest request, TA param1) where TF: IFeature<TA>
+        public async Task<IActionResult> ExecuteOkFeature<TF,TR>(HttpRequest request, Func<TF, Task<TR>> featureCall) where TF : IFeature
         {
-            return await Features.ExecuteFeature.Execute(this, typeof(TF), typeof(T), request, param1);
+            return await Features.ExecuteFeature.ExecuteOk(this, typeof(T), request, featureCall);
         }
 
-        public async Task<IActionResult> ExecuteFeature<TF, TA, TB>(HttpRequest request, TA param1, TB param2) where TF : IFeature<TA, TB> 
+        public async Task<IActionResult> ExecuteActionFeature<TF>(HttpRequest request, Func<TF, Task<IActionResult>> featureCall) where TF : IFeature
         {
-            return await Features.ExecuteFeature.Execute(this, typeof(TF), typeof(T), request, param1, param2);
+            return await Features.ExecuteFeature.ExecuteAction(this, typeof(T), request, featureCall);
         }
 
-        public async Task<IActionResult> ExecuteFeature<TF, TA, TB, TC>(HttpRequest request, TA param1, TB param2, TC param3) where TF : IFeature<TA, TB, TC> 
+        public async Task<IActionResult> ExecuteVoidFeatureWithBody<TF,TB>(HttpRequest request, Func<TF,TB, Task> featureCall) where TF : IFeature
         {
-            return await Features.ExecuteFeature.Execute(this, typeof(TF), typeof(T), request, param1, param2, param3);
+            return await Features.ExecuteFeature.ExecuteVoidWithBody(this, typeof(T), request, featureCall);
         }
+
+        public async Task<IActionResult> ExecuteOkFeatureWithBody<TF,TB, TR>(HttpRequest request, Func<TF,TB, Task<TR>> featureCall) where TF : IFeature
+        {
+            return await Features.ExecuteFeature.ExecuteOkWithBody(this, typeof(T), request, featureCall);
+        }
+
+        public async Task<IActionResult> ExecuteActionFeatureWithBody<TF,TB>(HttpRequest request, Func<TF,TB, Task<IActionResult>> featureCall) where TF : IFeature
+        {
+            return await Features.ExecuteFeature.ExecuteActionWithBody(this, typeof(T), request, featureCall);
+        }
+
 
         public void Dispose()
         {

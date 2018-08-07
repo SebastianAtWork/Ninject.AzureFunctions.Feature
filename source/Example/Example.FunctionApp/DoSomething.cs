@@ -19,7 +19,7 @@ namespace Example.FunctionApp
         {
             using (var autoContainer = new AutoFeatureContainer<AwesomeKernelInitializer>(log))
             {
-                return await autoContainer.ExecuteFeature<AwesomeFeature,int>(req, id);
+                return await autoContainer.ExecuteOkFeature(req, (AwesomeFeature feature) => feature.Execute(id));
             }
         }
     }
