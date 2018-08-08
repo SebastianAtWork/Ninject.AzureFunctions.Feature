@@ -62,8 +62,7 @@ Task("Build Solution")
     var settings =  new MSBuildSettings(){
        Configuration = configuration,
        Verbosity = (Verbosity)Enum.Parse(typeof(Verbosity),verbosity),
-       ToolVersion = MSBuildToolVersion.VS2017,
-       PlatformTarget = PlatformTarget.x64
+       ToolVersion = MSBuildToolVersion.VS2017
    };
    Information("Verbosity: " + settings.Verbosity);
    settings.Properties["PackageVersion"] = new []{gitVersion.NuGetVersion + "-" + incrementalValue};
