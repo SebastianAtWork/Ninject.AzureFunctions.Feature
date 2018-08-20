@@ -5,8 +5,8 @@
     <PackageId>Ninject.AzureFunctions.Contracts</PackageId>
     <PackageVersion>0.0.0</PackageVersion>
     <Title>Ninject.AzureFunctions.Contracts</Title>
-    <Description>Ninject.AzureFunctions.Contracts</Description>
-    <Authors>generic.de Software AG technologies </Authors>
+    <Description>Ninject.AzureFunctions.Contracts. License: https://github.com/SebastianAtWork/Ninject.AzureFunctions.Feature/blob/develop/LICENSE</Description>
+    <Authors>SebastianAtWork</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>../../bin/$(Configuration)/</OutputPath>
