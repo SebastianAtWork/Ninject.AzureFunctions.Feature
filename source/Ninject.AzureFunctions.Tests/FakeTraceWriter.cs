@@ -8,15 +8,16 @@ using Microsoft.Azure.WebJobs.Host;
 
 namespace Ninject.AzureFunctions.Tests
 {
-    public class ConsoleTraceWriter : TraceWriter
+    public class FakeTraceWriter : TraceWriter
     {
-        public ConsoleTraceWriter(TraceLevel level) : base(level)
+        public IList<TraceEvent> Log { get; set; } = new List<TraceEvent>();
+        public FakeTraceWriter(TraceLevel level) : base(level)
         {
         }
 
         public override void Trace(TraceEvent traceEvent)
         {
-            Console.WriteLine(traceEvent);
+            Log.Add(traceEvent);
         }
     }
 }

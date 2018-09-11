@@ -32,7 +32,7 @@ namespace Ninject.AzureFunctions.Tests.ExecuteFeatureTests
             public FakeKernelContainer()
             {
                 var kernelConfig = new VoidFeatureKernel()
-                    .CreateKernelConfiguration(new ConsoleTraceWriter(TraceLevel.Verbose));
+                    .CreateKernelConfiguration(new FakeTraceWriter(TraceLevel.Verbose));
                 Kernel = kernelConfig.BuildReadonlyKernel();
             }
         }
