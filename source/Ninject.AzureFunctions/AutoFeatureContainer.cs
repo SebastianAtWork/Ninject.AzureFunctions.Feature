@@ -27,32 +27,32 @@ namespace Ninject.AzureFunctions
 
         public async Task<IActionResult> ExecuteVoidFeature<TF>(HttpRequest request,Func<TF,Task> featureCall) where TF : IFeature
         {
-            return await Features.ExecuteFeature.ExecuteVoid(this,typeof(T), request, featureCall);
+            return await Features.ExecuteFeature.ExecuteVoid(this, featureCall);
         }
 
         public async Task<IActionResult> ExecuteOkFeature<TF,TR>(HttpRequest request, Func<TF, Task<TR>> featureCall) where TF : IFeature
         {
-            return await Features.ExecuteFeature.ExecuteOk(this, typeof(T), request, featureCall);
+            return await Features.ExecuteFeature.ExecuteOk(this, featureCall);
         }
 
         public async Task<IActionResult> ExecuteActionFeature<TF>(HttpRequest request, Func<TF, Task<IActionResult>> featureCall) where TF : IFeature
         {
-            return await Features.ExecuteFeature.ExecuteAction(this, typeof(T), request, featureCall);
+            return await Features.ExecuteFeature.ExecuteAction(this, featureCall);
         }
 
         public async Task<IActionResult> ExecuteVoidFeatureWithBody<TF,TB>(HttpRequest request, Func<TF,TB, Task> featureCall) where TF : IFeature
         {
-            return await Features.ExecuteFeature.ExecuteVoidWithBody(this, typeof(T), request, featureCall);
+            return await Features.ExecuteFeature.ExecuteVoidWithBody(this, request, featureCall);
         }
 
         public async Task<IActionResult> ExecuteOkFeatureWithBody<TF,TB, TR>(HttpRequest request, Func<TF,TB, Task<TR>> featureCall) where TF : IFeature
         {
-            return await Features.ExecuteFeature.ExecuteOkWithBody(this, typeof(T), request, featureCall);
+            return await Features.ExecuteFeature.ExecuteOkWithBody(this, request, featureCall);
         }
 
         public async Task<IActionResult> ExecuteActionFeatureWithBody<TF,TB>(HttpRequest request, Func<TF,TB, Task<IActionResult>> featureCall) where TF : IFeature
         {
-            return await Features.ExecuteFeature.ExecuteActionWithBody(this, typeof(T), request, featureCall);
+            return await Features.ExecuteFeature.ExecuteActionWithBody(this, request, featureCall);
         }
 
 

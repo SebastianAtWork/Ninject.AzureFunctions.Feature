@@ -23,7 +23,7 @@ namespace Ninject.AzureFunctions.Features
     public static class ExecuteFeature
     {
 
-        public static async Task<IActionResult> ExecuteVoid<TF>(IAutoFeatureContainer kernelContainer, Type typeofKernelInitializer, HttpRequest request, Func<TF, Task> featureCall)
+        public static async Task<IActionResult> ExecuteVoid<TF>(IAutoFeatureContainer kernelContainer, Func<TF, Task> featureCall)
         {
             var log = kernelContainer.Kernel.Get<TraceWriter>();
             try
@@ -40,7 +40,7 @@ namespace Ninject.AzureFunctions.Features
             }
         }
 
-        public static async Task<IActionResult> ExecuteOk<TF, TR>(IAutoFeatureContainer kernelContainer, Type typeofKernelInitializer, HttpRequest request, Func<TF, Task<TR>> featureCall)
+        public static async Task<IActionResult> ExecuteOk<TF, TR>(IAutoFeatureContainer kernelContainer, Func<TF, Task<TR>> featureCall)
         {
             var log = kernelContainer.Kernel.Get<TraceWriter>();
             try
@@ -57,7 +57,7 @@ namespace Ninject.AzureFunctions.Features
             }
         }
 
-        public static async Task<IActionResult> ExecuteAction<TF>(IAutoFeatureContainer kernelContainer, Type typeofKernelInitializer, HttpRequest request, Func<TF, Task<IActionResult>> featureCall)
+        public static async Task<IActionResult> ExecuteAction<TF>(IAutoFeatureContainer kernelContainer, Func<TF, Task<IActionResult>> featureCall)
         {
             var log = kernelContainer.Kernel.Get<TraceWriter>();
             try
@@ -74,7 +74,7 @@ namespace Ninject.AzureFunctions.Features
             }
         }
 
-        public static async Task<IActionResult> ExecuteVoidWithBody<TF, TB>(IAutoFeatureContainer kernelContainer, Type typeofKernelInitializer, HttpRequest request, Func<TF, TB, Task> featureCall)
+        public static async Task<IActionResult> ExecuteVoidWithBody<TF, TB>(IAutoFeatureContainer kernelContainer, HttpRequest request, Func<TF, TB, Task> featureCall)
         {
             var log = kernelContainer.Kernel.Get<TraceWriter>();
             try
@@ -93,7 +93,7 @@ namespace Ninject.AzureFunctions.Features
             }
         }
 
-        public static async Task<IActionResult> ExecuteOkWithBody<TF, TB, TR>(IAutoFeatureContainer kernelContainer, Type typeofKernelInitializer, HttpRequest request, Func<TF, TB, Task<TR>> featureCall)
+        public static async Task<IActionResult> ExecuteOkWithBody<TF, TB, TR>(IAutoFeatureContainer kernelContainer, HttpRequest request, Func<TF, TB, Task<TR>> featureCall)
         {
             var log = kernelContainer.Kernel.Get<TraceWriter>();
             try
@@ -112,7 +112,7 @@ namespace Ninject.AzureFunctions.Features
             }
         }
 
-        public static async Task<IActionResult> ExecuteActionWithBody<TF, TB>(IAutoFeatureContainer kernelContainer, Type typeofKernelInitializer, HttpRequest request, Func<TF, TB, Task<IActionResult>> featureCall)
+        public static async Task<IActionResult> ExecuteActionWithBody<TF, TB>(IAutoFeatureContainer kernelContainer, HttpRequest request, Func<TF, TB, Task<IActionResult>> featureCall)
         {
             var log = kernelContainer.Kernel.Get<TraceWriter>();
             try
