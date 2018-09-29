@@ -12,13 +12,13 @@ using Microsoft.Azure.WebJobs.Host;
 namespace Ninject.AzureFunctions
 {
     [ExcludeFromCodeCoverage]
-    public class AutoFeatureContainer<T> : IDisposable, IAutoFeatureContainer where T: IKernelInizializer
+    public class AutoFeatureContainer<T> : IDisposable, IAutoFeatureContainer where T: IKernelInitializer
     {
         private readonly IReadOnlyKernel _kernel;
 
         public AutoFeatureContainer(TraceWriter log)
         {
-            var kernelInizializer = Activator.CreateInstance(typeof(T)) as IKernelInizializer;
+            var kernelInizializer = Activator.CreateInstance(typeof(T)) as IKernelInitializer;
             _kernel = kernelInizializer.CreateKernelConfiguration(log).BuildReadonlyKernel();
         }
 

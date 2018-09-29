@@ -12,7 +12,7 @@ using Ninject.AzureFunctions.Contracts;
 
 namespace Example.FunctionApp
 {
-    public class AwesomeKernelInitializer : IKernelInizializer
+    public class AwesomeKernelInitializer : IKernelInitializer
     {
         public IKernelConfiguration CreateKernelConfiguration(TraceWriter log)
         {

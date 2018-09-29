@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ninject.AzureFunctions.Contracts
 {
-    public interface IKernelInizializer
+    public interface IKernelInitializer
     {
         IKernelConfiguration CreateKernelConfiguration(TraceWriter log);
     }

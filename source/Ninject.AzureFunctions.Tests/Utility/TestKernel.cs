@@ -9,7 +9,7 @@ using Ninject.AzureFunctions.Tests.ExecuteFeatureTests;
 
 namespace Ninject.AzureFunctions.Tests.Utility
 {
-    public class TestKernel : IKernelInizializer
+    public class TestKernel : IKernelInitializer
     {
         public IKernelConfiguration CreateKernelConfiguration(TraceWriter log)
         {
