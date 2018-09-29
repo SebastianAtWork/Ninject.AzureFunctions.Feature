@@ -1,6 +1,7 @@
 ﻿using Ninject.AzureFunctions.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Microsoft.Azure.WebJobs.Host;
 
 namespace Ninject.AzureFunctions
 {
+    [ExcludeFromCodeCoverage]
     public class AutoFeatureContainer<T> : IDisposable, IAutoFeatureContainer where T: IKernelInizializer
     {
         private readonly IReadOnlyKernel _kernel;
