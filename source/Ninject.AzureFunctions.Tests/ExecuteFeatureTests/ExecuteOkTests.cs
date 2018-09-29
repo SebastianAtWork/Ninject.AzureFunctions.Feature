@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs.Host;
 using Ninject.AzureFunctions.Contracts;
 using Ninject.AzureFunctions.Features;
+using Ninject.AzureFunctions.Tests.Utility;
 using NUnit.Framework;
 
 namespace Ninject.AzureFunctions.Tests.ExecuteFeatureTests
@@ -39,30 +40,7 @@ namespace Ninject.AzureFunctions.Tests.ExecuteFeatureTests
             Assert.That(result.GetType(), Is.EqualTo(typeof(InternalServerErrorResult)));
         }
 
-        internal class FakeKernelContainer : IAutoFeatureContainer
-        {
-            public IReadOnlyKernel Kernel { get; }
-
-            public FakeKernelContainer()
-            {
-                var kernelConfig = new OkFeatureKernel()
-                    .CreateKernelConfiguration(new FakeTraceWriter(TraceLevel.Verbose));
-                Kernel = kernelConfig.BuildReadonlyKernel();
-            }
-        }
-
-        internal class OkFeatureKernel : IKernelInizializer
-        {
-            public IKernelConfiguration CreateKernelConfiguration(TraceWriter log)
-            {
-                var config = new KernelConfiguration();
-
-                config.Bind<IFakeService>().To<FakeService>().InSingletonScope();
-                config.Bind<TraceWriter>().ToConstant(log);
-
-                return config;
-            }
-        }
+       
 
         internal class OkFeature : IFeature
         {
@@ -95,21 +73,6 @@ namespace Ninject.AzureFunctions.Tests.ExecuteFeatureTests
             }
         }
 
-        internal class FakeService : IFakeService
-        {
-            public string Value { get; set; }
-            public void SetValue(string value)
-            {
-                Value = value;
-            }
-        }
-
-        internal interface IFakeService
-        {
-            string Value { get; set; }
-
-            void SetValue(string value);
-
-        }
+      
     }
 }
