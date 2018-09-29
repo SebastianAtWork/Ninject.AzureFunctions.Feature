@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Example.Contracts.Repositories;
-using Microsoft.AspNetCore.Mvc;
 using Ninject.AzureFunctions.Contracts;
 
 namespace Example.Host.Features
@@ -20,7 +19,7 @@ namespace Example.Host.Features
 
         public async Task<string> Execute(int id)
         {
-            return "1";
+            return await Task.FromResult("1");
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Extensions.Logging;
 
 namespace Ninject.AzureFunctions
 {
@@ -16,7 +17,7 @@ namespace Ninject.AzureFunctions
     {
         private readonly IReadOnlyKernel _kernel;
 
-        public AutoFeatureContainer(TraceWriter log)
+        public AutoFeatureContainer(ILogger log)
         {
             var kernelInizializer = Activator.CreateInstance(typeof(T)) as IKernelInitializer;
             _kernel = kernelInizializer.CreateKernelConfiguration(log).BuildReadonlyKernel();

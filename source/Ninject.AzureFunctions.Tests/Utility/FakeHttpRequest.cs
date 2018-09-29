@@ -27,7 +27,7 @@ namespace Ninject.AzureFunctions.Tests.Utility
 
         public StreamWriter Writer { get; set; }
 
-        public override async Task<IFormCollection> ReadFormAsync(CancellationToken cancellationToken = new CancellationToken())
+        public override Task<IFormCollection> ReadFormAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             throw new NotImplementedException();
         }

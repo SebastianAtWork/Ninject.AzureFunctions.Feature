@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Ninject.AzureFunctions.Contracts;
 
@@ -25,7 +26,7 @@ namespace Ninject.AzureFunctions.Features
 
         public static async Task<IActionResult> ExecuteVoid<TF>(IAutoFeatureContainer kernelContainer, Func<TF, Task> featureCall)
         {
-            var log = kernelContainer.Kernel.Get<TraceWriter>();
+            var log = kernelContainer.Kernel.Get<ILogger>();
             try
             {
                 var feature = kernelContainer.Kernel.Get<TF>();
@@ -35,14 +36,14 @@ namespace Ninject.AzureFunctions.Features
             }
             catch (Exception e)
             {
-                log.Error(e.Message, e);
+                log.Log(LogLevel.Error,e,e.ToString());
                 return new InternalServerErrorResult();
             }
         }
 
         public static async Task<IActionResult> ExecuteOk<TF, TR>(IAutoFeatureContainer kernelContainer, Func<TF, Task<TR>> featureCall)
         {
-            var log = kernelContainer.Kernel.Get<TraceWriter>();
+            var log = kernelContainer.Kernel.Get<ILogger>();
             try
             {
                 var feature = kernelContainer.Kernel.Get<TF>();
@@ -52,14 +53,14 @@ namespace Ninject.AzureFunctions.Features
             }
             catch (Exception e)
             {
-                log.Error(e.Message, e);
+                log.Log(LogLevel.Error, e, e.ToString());
                 return new InternalServerErrorResult();
             }
         }
 
         public static async Task<IActionResult> ExecuteAction<TF>(IAutoFeatureContainer kernelContainer, Func<TF, Task<IActionResult>> featureCall)
         {
-            var log = kernelContainer.Kernel.Get<TraceWriter>();
+            var log = kernelContainer.Kernel.Get<ILogger>();
             try
             {
                 var feature = kernelContainer.Kernel.Get<TF>();
@@ -69,14 +70,14 @@ namespace Ninject.AzureFunctions.Features
             }
             catch (Exception e)
             {
-                log.Error(e.Message, e);
+                log.Log(LogLevel.Error, e, e.ToString());
                 return new InternalServerErrorResult();
             }
         }
 
         public static async Task<IActionResult> ExecuteVoidWithBody<TF, TB>(IAutoFeatureContainer kernelContainer, HttpRequest request, Func<TF, TB, Task> featureCall)
         {
-            var log = kernelContainer.Kernel.Get<TraceWriter>();
+            var log = kernelContainer.Kernel.Get<ILogger>();
             try
             {
                 var feature = kernelContainer.Kernel.Get<TF>();
@@ -88,14 +89,14 @@ namespace Ninject.AzureFunctions.Features
             }
             catch (Exception e)
             {
-                log.Error(e.Message, e);
+                log.Log(LogLevel.Error, e, e.ToString());
                 return new InternalServerErrorResult();
             }
         }
 
         public static async Task<IActionResult> ExecuteOkWithBody<TF, TB, TR>(IAutoFeatureContainer kernelContainer, HttpRequest request, Func<TF, TB, Task<TR>> featureCall)
         {
-            var log = kernelContainer.Kernel.Get<TraceWriter>();
+            var log = kernelContainer.Kernel.Get<ILogger>();
             try
             {
                 var feature = kernelContainer.Kernel.Get<TF>();
@@ -107,14 +108,14 @@ namespace Ninject.AzureFunctions.Features
             }
             catch (Exception e)
             {
-                log.Error(e.Message, e);
+                log.Log(LogLevel.Error, e, e.ToString());
                 return new InternalServerErrorResult();
             }
         }
 
         public static async Task<IActionResult> ExecuteActionWithBody<TF, TB>(IAutoFeatureContainer kernelContainer, HttpRequest request, Func<TF, TB, Task<IActionResult>> featureCall)
         {
-            var log = kernelContainer.Kernel.Get<TraceWriter>();
+            var log = kernelContainer.Kernel.Get<ILogger>();
             try
             {
                 var feature = kernelContainer.Kernel.Get<TF>();
@@ -126,7 +127,7 @@ namespace Ninject.AzureFunctions.Features
             }
             catch (Exception e)
             {
-                log.Error(e.Message, e);
+                log.Log(LogLevel.Error, e, e.ToString());
                 return new InternalServerErrorResult();
             }
         }

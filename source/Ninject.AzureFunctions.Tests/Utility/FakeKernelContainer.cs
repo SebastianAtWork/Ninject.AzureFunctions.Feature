@@ -10,7 +10,7 @@ namespace Ninject.AzureFunctions.Tests.Utility
             public FakeKernelContainer()
             {
                 var kernelConfig = new TestKernel()
-                    .CreateKernelConfiguration(new FakeTraceWriter(TraceLevel.Verbose));
+                    .CreateKernelConfiguration(new FakeLogger());
                 Kernel = kernelConfig.BuildReadonlyKernel();
             }
         }
