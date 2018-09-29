@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Ninject.AzureFunctions.Contracts;
 using Ninject.AzureFunctions.Features;
@@ -13,33 +12,34 @@ using NUnit.Framework;
 
 namespace Ninject.AzureFunctions.Tests.ExecuteFeatureTests
 {
-    public class ExecuteVoidWithBodyTests
+    public class ExecuteOkWithBodyTests
     {
         [Test]
-        public async Task ExecutesVoidWithBodyFeature()
+        public async Task ExecutesOkWithBodyFeature()
         {
             var kernelContainer = new FakeKernelContainer();
             var fakeService = kernelContainer.Kernel.Get<IFakeService>();
             var request = new FakeHttpRequest<string>("Test");
 
             var result =
-                await ExecuteFeature.ExecuteVoidWithBody<VoidWithBodyFeature,string>(kernelContainer, request,(f,b) => f.Execute(b)) as
-                    OkResult;
+                await ExecuteFeature.ExecuteOkWithBody<OkWithBodyFeature, string,string>(kernelContainer, request, (f, b) => f.Execute(b)) as
+                    OkObjectResult;
 
             Assert.That(fakeService.Value, Is.EqualTo("Test"));
             Assert.That(result, Is.Not.Null);
+            Assert.That(result.Value, Is.EqualTo("Bla"));
 
             request.Dispose();
         }
 
         [Test]
-        public async Task ExecutesVoidWithBodyFeatureThrowsException()
+        public async Task ExecutesOkWithBodyFeatureThrowsException()
         {
             var kernelContainer = new FakeKernelContainer();
             var request = new FakeHttpRequest<string>("Test");
 
             var result =
-                await ExecuteFeature.ExecuteVoidWithBody<VoidWithBodyFeatureWithException,string>(kernelContainer, request,(f, b) => f.Execute(b));
+                await ExecuteFeature.ExecuteOkWithBody<OkWithBodyFeatureWithException, string,string>(kernelContainer, request, (f, b) => f.Execute(b));
 
             Assert.That(result.GetType(), Is.EqualTo(typeof(InternalServerErrorResult)));
             request.Dispose();
@@ -47,34 +47,35 @@ namespace Ninject.AzureFunctions.Tests.ExecuteFeatureTests
 
 
 
-        internal class VoidWithBodyFeature : IFeature
+        internal class OkWithBodyFeature : IFeature
         {
             private readonly IFakeService _fakeService;
 
-            public VoidWithBodyFeature(IFakeService fakeService)
+            public OkWithBodyFeature(IFakeService fakeService)
             {
                 _fakeService = fakeService;
             }
 
-            public async Task Execute(string value)
+            public async Task<string> Execute(string value)
             {
-                await Task.FromResult(1);
                 _fakeService.SetValue(value);
+                return await Task.FromResult("Bla");
             }
         }
 
-        internal class VoidWithBodyFeatureWithException : IFeature
+        internal class OkWithBodyFeatureWithException : IFeature
         {
             private readonly IFakeService _fakeService;
 
-            public VoidWithBodyFeatureWithException(IFakeService fakeService)
+            public OkWithBodyFeatureWithException(IFakeService fakeService)
             {
                 _fakeService = fakeService;
             }
 
-            public async Task Execute(string value)
+            public async Task<string> Execute(string value)
             {
                 await Task.Run(() => throw new ArgumentException());
+                return "Bla";
             }
         }
     }
