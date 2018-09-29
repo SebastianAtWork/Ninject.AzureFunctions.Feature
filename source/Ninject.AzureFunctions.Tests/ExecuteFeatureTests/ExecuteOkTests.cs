@@ -7,34 +7,35 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs.Host;
-using Newtonsoft.Json.Serialization;
 using Ninject.AzureFunctions.Contracts;
 using Ninject.AzureFunctions.Features;
 using NUnit.Framework;
 
 namespace Ninject.AzureFunctions.Tests.ExecuteFeatureTests
 {
-    public class ExecuteVoidTests
+    public class ExecuteOkTests
     {
         [Test]
-        public async Task ExecutesVoidFeature()
+        public async Task ExecutesOkFeature()
         {
             var kernelContainer = new FakeKernelContainer();
             var fakeService = kernelContainer.Kernel.Get<IFakeService>();
 
-            var result = await ExecuteFeature.ExecuteVoid<VoidFeature>(kernelContainer, f => f.Execute("Test"));
+            var result = await ExecuteFeature.ExecuteOk<OkFeature,string>(kernelContainer, f => f.Execute("Test")) as OkObjectResult;
 
-            Assert.That(fakeService.Value,Is.EqualTo("Test"));
-            Assert.That(result.GetType(),Is.EqualTo(typeof(OkResult)));
+            Assert.That(fakeService.Value, Is.EqualTo("Test"));
+            Assert.That(result, Is.Not.Null);
+            var resultContent = result.Value;
+            Assert.That(resultContent,Is.EqualTo("Bla"));
         }
 
         [Test]
-        public async Task ExecutesVoidFeatureThrowsException()
+        public async Task ExecutesOkFeatureThrowsException()
         {
             var kernelContainer = new FakeKernelContainer();
 
-            var result = await ExecuteFeature.ExecuteVoid<VoidFeatureWithException>(kernelContainer, f => f.Execute("Test"));
-            
+            var result = await ExecuteFeature.ExecuteOk<OkFeatureWithException,string>(kernelContainer, f => f.Execute("Test"));
+
             Assert.That(result.GetType(), Is.EqualTo(typeof(InternalServerErrorResult)));
         }
 
@@ -44,13 +45,13 @@ namespace Ninject.AzureFunctions.Tests.ExecuteFeatureTests
 
             public FakeKernelContainer()
             {
-                var kernelConfig = new VoidFeatureKernel()
+                var kernelConfig = new OkFeatureKernel()
                     .CreateKernelConfiguration(new FakeTraceWriter(TraceLevel.Verbose));
                 Kernel = kernelConfig.BuildReadonlyKernel();
             }
         }
 
-        internal class VoidFeatureKernel : IKernelInizializer
+        internal class OkFeatureKernel : IKernelInizializer
         {
             public IKernelConfiguration CreateKernelConfiguration(TraceWriter log)
             {
@@ -63,33 +64,34 @@ namespace Ninject.AzureFunctions.Tests.ExecuteFeatureTests
             }
         }
 
-        internal class VoidFeature : IFeature
+        internal class OkFeature : IFeature
         {
             private readonly IFakeService _fakeService;
 
-            public VoidFeature(IFakeService fakeService)
+            public OkFeature(IFakeService fakeService)
             {
                 _fakeService = fakeService;
             }
 
-            public async Task Execute(string value)
+            public async Task<string> Execute(string value)
             {
-                await Task.FromResult(1);
                 _fakeService.SetValue(value);
+                return await Task.FromResult("Bla");
             }
         }
-        internal class VoidFeatureWithException : IFeature
+        internal class OkFeatureWithException : IFeature
         {
             private readonly IFakeService _fakeService;
 
-            public VoidFeatureWithException(IFakeService fakeService)
+            public OkFeatureWithException(IFakeService fakeService)
             {
                 _fakeService = fakeService;
             }
 
-            public async Task Execute(string value)
+            public async Task<string> Execute(string value)
             {
                 await Task.Run(()=>throw new ArgumentException());
+                return value;
             }
         }
 
