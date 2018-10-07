@@ -13,9 +13,7 @@ namespace Ninject.AzureFunctions.NUnit
     {
         public static void AssertCanBuildFeature<TKernelInitializer>(FeatureTestData featureTestData) where TKernelInitializer : IKernelInitializer
         {
-            var kernelInitializer = Activator.CreateInstance<TKernelInitializer>();
-            var fakeLogger = new FakeLogger();
-            using (var kernel = kernelInitializer.CreateKernelConfiguration(fakeLogger).BuildReadonlyKernel())
+            using (var kernel = featureTestData.KernelConfiguration.BuildReadonlyKernel())
             {
                 try
                 {
@@ -23,7 +21,7 @@ namespace Ninject.AzureFunctions.NUnit
                 }
                 catch (ActivationException e)
                 {
-                    throw new AssertionException($"Cannot resolve {featureTestData.TestName}",e);
+                    throw new AssertionException($"Cannot resolve {featureTestData.TestName}", e);
                 }
             }
         }

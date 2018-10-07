@@ -11,5 +11,6 @@ namespace Ninject.AzureFunctions.NUnit
     public class FeatureTestData : TestCaseData
     {
         public Type TypeInfo { get; set; }
+        public IKernelConfiguration KernelConfiguration { get; set; }
     }
 }

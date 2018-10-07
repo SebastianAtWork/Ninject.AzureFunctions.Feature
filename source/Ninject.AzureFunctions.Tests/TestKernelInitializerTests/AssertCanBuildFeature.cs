@@ -15,7 +15,8 @@ namespace Ninject.AzureFunctions.Tests.TestKernelInitializerTests
             var featureTestData = new FeatureTestData()
             {
                 TestName = nameof(CanDoFeature),
-                TypeInfo = typeof(CanDoFeature)
+                TypeInfo = typeof(CanDoFeature),
+                KernelConfiguration = new CanDoKernelInitializer().CreateKernelConfiguration(new FakeLogger())
             };
 
             TestKernelInitializer.AssertCanBuildFeature<CanDoKernelInitializer>(featureTestData);
@@ -27,7 +28,8 @@ namespace Ninject.AzureFunctions.Tests.TestKernelInitializerTests
             var featureTestData = new FeatureTestData()
             {
                 TestName = nameof(NoCanDoFeature),
-                TypeInfo = typeof(NoCanDoFeature)
+                TypeInfo = typeof(NoCanDoFeature),
+                KernelConfiguration = new CanDoKernelInitializer().CreateKernelConfiguration(new FakeLogger())
             };
 
             try
