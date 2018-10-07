@@ -11,7 +11,7 @@ namespace Ninject.AzureFunctions.NUnit
 {
     public static class TestKernelInitializer
     {
-        public static void AssertCanBuildFeature<TKernelInitializer>(FeatureTestData featureTestData) where TKernelInitializer : IKernelInitializer
+        public static void AssertCanBuildFeature(FeatureTestData featureTestData)
         {
             using (var kernel = featureTestData.KernelConfiguration.BuildReadonlyKernel())
             {

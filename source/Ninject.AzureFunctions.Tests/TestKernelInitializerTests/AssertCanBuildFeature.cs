@@ -19,7 +19,7 @@ namespace Ninject.AzureFunctions.Tests.TestKernelInitializerTests
                 KernelConfiguration = new CanDoKernelInitializer().CreateKernelConfiguration(new FakeLogger())
             };
 
-            TestKernelInitializer.AssertCanBuildFeature<CanDoKernelInitializer>(featureTestData);
+            TestKernelInitializer.AssertCanBuildFeature(featureTestData);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Ninject.AzureFunctions.Tests.TestKernelInitializerTests
 
             try
             {
-                TestKernelInitializer.AssertCanBuildFeature<CanDoKernelInitializer>(featureTestData);
+                TestKernelInitializer.AssertCanBuildFeature(featureTestData);
             }
             catch (AssertionException)
             {
