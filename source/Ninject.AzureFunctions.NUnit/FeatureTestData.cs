@@ -10,6 +10,6 @@ namespace Ninject.AzureFunctions.NUnit
 {
     public class FeatureTestData : TestCaseData
     {
-        public TypeInfo TypeInfo { get; set; }
+        public Type TypeInfo { get; set; }
     }
 }
