@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
-namespace Ninject.AzureFunctions.Tests.Utility
+namespace Ninject.AzureFunctions.NUnit
 {
     public class FakeLogger : ILogger
     {

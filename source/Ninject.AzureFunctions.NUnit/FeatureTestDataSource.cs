@@ -23,7 +23,7 @@ namespace Ninject.AzureFunctions.NUnit
         {
             return new FeatureTestData()
             {
-                RelativeNamespace = featureType.Namespace.Substring(rootNamespace.Length-1,featureType.Namespace.Length- (rootNamespace.Length - 1)),
+                TestName = featureType.Namespace.Substring(rootNamespace.Length-1,featureType.Namespace.Length- (rootNamespace.Length - 1)) + "." + featureType.Name,
                 TypeInfo  = featureType
             };
         }

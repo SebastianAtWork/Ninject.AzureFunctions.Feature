@@ -24,7 +24,7 @@ namespace Ninject.AzureFunctions.Tests.FeatureTestDataSourceTests
         {
             var testData = FeatureTestDataSource.Create(typeof(CFeature)).Single();
 
-            Assert.That(testData.RelativeNamespace,Is.EqualTo(nameof(TestNamespace.C)));
+            Assert.That(testData.TestName,Is.EqualTo(nameof(TestNamespace.C) + "." + nameof(CFeature)));
             Assert.That(testData.TypeInfo.Name,Is.EqualTo(nameof(CFeature)));
         }
     }

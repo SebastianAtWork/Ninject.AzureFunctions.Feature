@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Ninject.AzureFunctions.Contracts;
+using Ninject.AzureFunctions.NUnit;
 
 namespace Ninject.AzureFunctions.Tests.Utility
 {
