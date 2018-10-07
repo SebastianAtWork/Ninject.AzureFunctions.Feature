@@ -26,8 +26,10 @@ namespace Ninject.AzureFunctions.Tests.FeatureTestDataSourceTests
         {
             var testData = FeatureTestDataSource<CFeature, FakeKernelInitializer>.Create().Single();
 
-            Assert.That(testData.TestName, Is.EqualTo(nameof(TestNamespace.C) + "." + nameof(CFeature)));
-            Assert.That(testData.TypeInfo.Name, Is.EqualTo(nameof(CFeature)));
+            Assert.That(testData.TestName, Is.EqualTo("Features.CFeature"));
+            Assert.That((testData.Arguments[0] as Type)?.Name, Is.EqualTo(nameof(CFeature)));
+            Assert.That((testData.Arguments[1] as IKernelConfiguration), Is.Not.Null);
+            Assert.That((testData.Arguments[2] as string), Is.EqualTo("Features.CFeature"));
         }
 
 

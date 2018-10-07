@@ -12,6 +12,10 @@ namespace Ninject.AzureFunctions.Tests.Utility
 {
     public class TestKernel : IKernelInitializer
     {
+        public TestKernel()
+        {
+            
+        }
         public IKernelConfiguration CreateKernelConfiguration(ILogger log)
         {
             var config = new KernelConfiguration();

@@ -6,17 +6,20 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Ninject.AzureFunctions.Contracts;
+using NUnit.Framework;
 
 namespace Ninject.AzureFunctions.NUnit
 {
-    public static class FeatureTestDataSource<TRootType,TKernelInitializer> where TKernelInitializer : IKernelInitializer
+    public class FeatureTestDataSource<TRootType,TKernelInitializer> where TKernelInitializer : IKernelInitializer
     {
+        
+        // ReSharper disable once UnusedMember.Global
         public static IEnumerable TestCases
         {
             get { return Create(); }
         }
 
-        public static IEnumerable<FeatureTestData> Create()
+        public static IEnumerable<TestCaseData> Create()
         {
             var namespaceRootType = typeof(TRootType);
             var rootNamespace = namespaceRootType.Namespace;
@@ -27,14 +30,27 @@ namespace Ninject.AzureFunctions.NUnit
             return featureTypes.Select(f => ConvertToTestData(f, rootNamespace, kernelInitializer.CreateKernelConfiguration(new FakeLogger())));
         }
 
-        private static FeatureTestData ConvertToTestData(TypeInfo featureType, string rootNamespace,
+        private static TestCaseData ConvertToTestData(TypeInfo featureType, string rootNamespace,
             IKernelConfiguration kernelConfiguration)
         {
-            return new FeatureTestData()
+            var testName = "";
+            var relativeNamespace =
+                featureType.Namespace.Substring(rootNamespace.Length,
+                    featureType.Namespace.Length - (rootNamespace.Length));
+            relativeNamespace = relativeNamespace.TrimStart('.');
+            if (relativeNamespace.Length > 0)
             {
-                TestName = featureType.Namespace.Substring(rootNamespace.Length-1,featureType.Namespace.Length- (rootNamespace.Length - 1)) + "." + featureType.Name,
-                TypeInfo  = featureType,
-                KernelConfiguration = kernelConfiguration
+                testName = $"{relativeNamespace}.{featureType.Name}";
+            }
+            else
+            {
+                testName = featureType.Name;
+            }
+
+            testName = "Features." + testName;
+            return new TestCaseData(featureType,kernelConfiguration,testName)
+            {
+                TestName = testName
             };
         }
     }

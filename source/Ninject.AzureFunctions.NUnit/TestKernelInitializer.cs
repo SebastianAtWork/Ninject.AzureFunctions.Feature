@@ -11,17 +11,17 @@ namespace Ninject.AzureFunctions.NUnit
 {
     public static class TestKernelInitializer
     {
-        public static void AssertCanBuildFeature(FeatureTestData featureTestData)
+        public static void AssertCanBuildFeature(Type featureType, IKernelConfiguration kernelConfiguration, string testName)
         {
-            using (var kernel = featureTestData.KernelConfiguration.BuildReadonlyKernel())
+            using (var kernel = kernelConfiguration.BuildReadonlyKernel())
             {
                 try
                 {
-                    kernel.Get(featureTestData.TypeInfo);
+                    kernel.Get(featureType);
                 }
                 catch (ActivationException e)
                 {
-                    throw new AssertionException($"Cannot resolve {featureTestData.TestName}", e);
+                    throw new AssertionException($"Cannot resolve {testName}", e);
                 }
             }
         }
