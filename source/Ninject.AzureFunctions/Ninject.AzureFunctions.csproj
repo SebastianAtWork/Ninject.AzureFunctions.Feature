@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ninject.AzureFunctions.Contracts\Ninject.AzureFunctions.Contracts.csproj" />
+    <ProjectReference Include="..\Ninject.AzureFunctions.NUnit\Ninject.AzureFunctions.NUnit.csproj" />
   </ItemGroup>
 
 </Project>
